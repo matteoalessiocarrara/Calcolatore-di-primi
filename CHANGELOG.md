@@ -133,7 +133,7 @@
 -------------
  - Salta direttamente i numeri pari perchè i primi > 2 non possono essere pari.
 
-1.O 7/7/2014
+1.0 7/7/2014
 ------------
  - Va ma è molto lento.
 
