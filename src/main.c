@@ -30,6 +30,7 @@
 #if (TIPO_CALCOLO != N_PRIMI ) && (TIPO_CALCOLO != PRIMI_MINORI)
 #error TIPO_CALCOLO sconosciuto, deve essere uguale a N_PRIMI o PRIMI_MINORI
 #endif /*#if (TIPO_CALCOLO != N_PRIMI ) && (TIPO_CALCOLO != PRIMI_MINORI)*/
+
 #if (TIPO_CALCOLO==PRIMI_MINORI)
 #if (N<4)
 #error N deve essere >= 4
@@ -68,7 +69,7 @@ int main ()
     {
         rad=sqrtl(numTest);
         i=1;  /*primi[0] è 2*/
-        while (primi[i] <= rad)
+        while (primi[i]<=rad)
             if ((numTest%primi[i++])==0)
                 goto nonprimo;
         primi[contPrimi++]=numTest;

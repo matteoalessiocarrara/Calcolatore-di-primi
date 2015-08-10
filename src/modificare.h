@@ -22,8 +22,8 @@
 #ifndef MODIFICARE_H
 #define MODIFICARE_H
 
-#define TIPO_CALCOLO N_PRIMI /*N_PRIMI o PRIMI_MINORI, definizione in "header.h"*/
-#define N 1000000 /*Primi minori di N/N primi*/
+#define TIPO_CALCOLO N_PRIMI /*N_PRIMI o PRIMI_MINORI*/
+#define N 1000000 /*Primi minori di N, o N primi (dipende dal define sopra)*/
 #define BENCHMARK 1 /*Mostra SOLO quanto ci ha messo per il calcolo dei primi, mettere un numero diverso da 0 per attivare*/
 
 #endif
