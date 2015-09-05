@@ -22,13 +22,13 @@
 
 typedef long long unsigned llu;
 
-#define VERSIONE_SOFTWARE_S "3.0 12/7/2015"
+#define VERSIONE_SOFTWARE_S "3.0.1 5/9/2015"
 
 #define NUM_MAX ((llu)~0) /*Il numero più grande per una variabile llu*/
 
-#define err printf("Err: "__FILE__":%d: ", __LINE__); printf 
-#define warn printf("Warn: "); printf
-#define inf printf("Info: "); printf
+#define err fprintf(stderr, "E: "__FILE__":%d: ", __LINE__); fprintf 
+#define warn fprintf(stderr, "W: "); fprintf
+#define inf fprintf(stderr, "I: "); fprintf
 
 /*Valori per TIPO_CALCOLO*/
 #define N_PRIMI 0

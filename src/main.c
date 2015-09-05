@@ -27,9 +27,9 @@
 #include "header.h"
 #include "modificare.h"
 
-#if (TIPO_CALCOLO != N_PRIMI ) && (TIPO_CALCOLO != PRIMI_MINORI)
+#if (TIPO_CALCOLO!=N_PRIMI) && (TIPO_CALCOLO!=PRIMI_MINORI)
 #error TIPO_CALCOLO sconosciuto, deve essere uguale a N_PRIMI o PRIMI_MINORI
-#endif /*#if (TIPO_CALCOLO != N_PRIMI ) && (TIPO_CALCOLO != PRIMI_MINORI)*/
+#endif
 
 #if (TIPO_CALCOLO==PRIMI_MINORI)
 #if (N<4)
@@ -46,6 +46,7 @@ int main ()
 {   
     register llu i, rad, numTest=5, *primi, contPrimi=2; /*nell'array dei primi ci sono già 2 e 3*/
 
+    /*Creo l'array per i primi*/
     #if (TIPO_CALCOLO==PRIMI_MINORI)
     /*I primi minori di un numero>2 non possono essere più dei dispari minori del numero*/
     if((primi=(llu*)malloc(sizeof(llu)*(N/2)))==NULL)
@@ -53,14 +54,18 @@ int main ()
     if((primi=(llu*)malloc(sizeof(llu)*N))==NULL)
     #endif /*#if (TIPO_CALCOLO==PRIMI_MINORI)*/
     {
-        err("malloc() ha restituito NULL\n");
+        err(stderr, "Malloc() ha restituito NULL\n");
         exit(EXIT_FAILURE);
     }
+
     primi[0]=2; primi[1]=3;
+
     #if BENCHMARK
     #include <time.h>
     clock_t inizio=clock(), fine;
     #endif /*#if BENCHMARK*/
+
+    inf(stderr, "Calcolo avviato\n");
     #if (TIPO_CALCOLO==N_PRIMI)
     while (contPrimi<N)
     #else
@@ -68,21 +73,23 @@ int main ()
     #endif /*#if (TIPO_CALCOLO==N_PRIMI)*/
     {
         rad=sqrtl(numTest);
-        i=1;  /*primi[0] è 2*/
-        while (primi[i]<=rad)
-            if ((numTest%primi[i++])==0)
+        i=1;  /*primi[0] è 2, numTest essendo sempre dispari non sarà mai divisibile per 2*/
+        while (primi[i]<=rad) /*divido per tutti i primi minori della radice quadrata*/
+            if ((numTest%primi[i++])==0) 
                 goto nonprimo;
         primi[contPrimi++]=numTest;
         nonprimo:;
         numTest+=2; 
     }
+
     #if BENCHMARK
     fine=clock();
-    inf("Tempo: %llu\n", fine-inizio);
+    inf(stderr, "Tempo: %fs\n", (double)(fine-inizio)/CLOCKS_PER_SEC);
     #else
-    for(i=0; i<contPrimi; i++)
+    for(i=0; i<contPrimi; i++) /*stampo i primi trovati*/
         printf("%llu %llu\n", i+1, primi[i]);
     #endif /*#if BENCHMARK*/
+
     free (primi);
     return EXIT_SUCCESS;
 }

@@ -1,5 +1,11 @@
+3.0.1 5/9/2015
+--------------
+ - Output su stdout, errori informazioni ed altra roba su stderr
+ - Aggiunto qualche commento
+ - Tempo del calcolo in secondi
+
 3.0 12/7/2015
----------
+-------------
  - Codice ripulito e semplificato
  - Eliminata gestione dei file, stampa i risultati con printf
  - Eliminata protezione overflow, usando una formula è possibile sapere subito se la variabile andrà in overflow
