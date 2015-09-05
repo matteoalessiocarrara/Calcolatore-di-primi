@@ -1,6 +1,6 @@
 # Calcolatore di primi #
 
-Crea una lista con *x primi* o *tutti i primi minori di x*
+Crea una lista con *x primi* o *tutti i primi minori di x*  
 **Attenzione: non ci sono eseguibili già compilati e tutte le impostazioni vanno definite prima della compilazione**
 
 ## Os ##
@@ -12,12 +12,12 @@ Questo software è pensato per essere eseguito su os unix-like, ma forse modific
 Modificare il file "modificare.h", poi
 
 ```
-cc -lm main.c
+cc main.c -lm
 ```
 
 ## Output ##
 
-I numeri primi vengono stampati su stdout, tutto il resto su stderr e ogni messaggio inizia con "I:", "W:" o "E:"
+I numeri primi vengono stampati su stdout, tutto il resto su stderr e ogni messaggio inizia con *I:*, *W:* o *E:*
 
 ## Return ##
 
