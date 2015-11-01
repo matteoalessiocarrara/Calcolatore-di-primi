@@ -20,18 +20,17 @@
 #ifndef HEADER_H
 #define HEADER_H
 
-typedef long long unsigned llu;
-
-#define VERSIONE_SOFTWARE_S "3.0.1 5/9/2015"
-
-#define NUM_MAX ((llu)~0) /*Il numero più grande per una variabile llu*/
-
-#define err fprintf(stderr, "E: "__FILE__":%d: ", __LINE__); fprintf 
-#define warn fprintf(stderr, "W: "); fprintf
-#define inf fprintf(stderr, "I: "); fprintf
-
-/*Valori per TIPO_CALCOLO*/
+/* Valori per il define TIPO_CALCOLO in config.h */
 #define N_PRIMI 0
 #define PRIMI_MINORI 1
 
-#endif /*#ifndef HEADER_H*/
+/* Il numero più grande rappresentabile con un certo tipo unsigned */
+/* (2^bit)-1 */
+#define UNSIGNED_MAX(tipo) ((1<<(sizeof(tipo)*8))-1)
+
+/* Informazioni su stderr, solo output su stdout */
+#define err fprintf(stderr, "E: " __FILE__ ":%d: ", __LINE__); fprintf
+#define inf fprintf(stderr, "I: "); fprintf
+#define warn fprintf(stderr, "W: "); fprintf
+
+#endif /* #ifndef HEADER_H */

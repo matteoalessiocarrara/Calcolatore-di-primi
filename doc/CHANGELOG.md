@@ -1,3 +1,9 @@
+3.1 1/11/2015
+-------------
+ - Migliorati commenti
+ - Dimensione delle variabili modificabile
+ - Main quasi completamente riscritta
+
 3.0.1 5/9/2015
 --------------
  - Output su stdout, errori informazioni ed altra roba su stderr
