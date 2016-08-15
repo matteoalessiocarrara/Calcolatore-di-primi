@@ -21,13 +21,19 @@
 # ifndef CONFIG_H
 # define CONFIG_H
 
+# include <stdint.h>
 
 // Un numero primo, vengono salvati prima di stamparli
-typedef unsigned prime_t;
+typedef uint32_t prime_t;
 # define PRIME_T_FORMAT_STRING "%u"
 
 // Indica quanti numeri sono stati trovati
-typedef unsigned primes_counter_t;
+typedef uint32_t primes_counter_t;
+
+
+// Contiene la radice quadrata di un numero primo (prime_t). Deve essere sufficientemente
+// grande per contenere sqrt(max(prime_t))
+typedef uint16_t prime_sqrt_t;
 
 
 #endif /* #ifndef CONFIG_H */

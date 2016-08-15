@@ -62,7 +62,7 @@ int main(int argc, char **argv)
 	calc_start = clock();
 	for (prime_t test = 5; primes_counter < primes_to_calc; test += 2)
 	{
-		long s;
+		prime_sqrt_t s;
 		primes_counter_t i;
 
 		// Divide per tutti i primi minori della radice quadrata
