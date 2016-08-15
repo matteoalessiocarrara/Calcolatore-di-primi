@@ -1,3 +1,6 @@
+Questo file non sarà più aggiornato, viene mantenuto come ricordo perché le versioni 
+più vecchie non erano gestite con git
+
 3.1 1/11/2015
 -------------
  - Migliorati commenti
