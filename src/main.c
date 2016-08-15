@@ -1,6 +1,6 @@
 /*
- * Copyright 2014-2015 Matteo Alessio Carrara <sw.matteoac@gmail.com>
- * Grazie ad "Alessandro Renzulli" e a tutti gli amici che mi hanno aiutato
+ * Copyright 2014-2016 Matteo Alessio Carrara <sw.matteoac@gmail.com>
+ * Grazie ad Alessandro Renzulli e a tutti gli amici che mi hanno aiutato
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,99 +19,71 @@
  *
  */
 
-#include <math.h>
-#include <stdio.h>
-#include <errno.h>
-#include <stdlib.h>
+# include <time.h>
+# include <math.h>
+# include <stdio.h>
+# include <errno.h>
+# include <stdlib.h>
 
-#include "header.h"
-#include "config.h"
-#include "version.h"
+# include "config.h"
 
 
-int main()
+int main(int argc, char **argv)
 {
-	/* Array per i primi */
-	register num_t *primi;
-	/* Contatore dei primi nell'array (c'è già "3") */
-	cprimi_t cprimi = 1;
-	/* Usata in cicli sull'array */
-	register cprimi_t i;
-	/* Radice quadrata del numero che si sta controllando */
-	register rad_t rad;
+	prime_t *primes; // TODO Utilizzare una mappa di bit?
+	clock_t calc_start, calc_end;
+	primes_counter_t primes_counter = 0, primes_to_calc;
 
-	/* Creo l'array */
 
-	#if (TIPO_CALCOLO == PRIMI_MINORI)
-
-	/* I primi minori di un numero > 2 non sono più dei dispari minori */
-	/* I dispari minori di N sono N/2 */
-	/* Non c'è "2" nell'array, quindi la memoria è per (N/2)-1 primi */
-	primi = (num_t*) malloc(sizeof(num_t) * ((N/2)-1));
-
-	#else
-
-	/* Vogliamo calcolare N primi, ma il "2" non viene salvato quindi N-1*/
-	primi = (num_t*) malloc(sizeof(num_t) * (N-1));
-
-	#endif
-
-	if (primi == NULL)
+	if (argc == 2)
 	{
-		perror("malloc(), " __FILE__);
+		// WARNING Il return potrebbe essere un collo di bottiglia
+		primes_to_calc = atoll(argv[1]);
+	}
+	else
+	{
+		puts("Uso: calcolatore-di-primi numeri-da-calcolare");
 		exit(EXIT_FAILURE);
 	}
 
-	primi[0] = 3;
 
-	inf(stderr, "calcolo avviato\n");
-
-	#if BENCHMARK
-
-	#include <time.h>
-	clock_t inizio = clock(), fine;
-
-	#endif
-
-	#if (TIPO_CALCOLO == N_PRIMI)
-
-	for (register num_t test = 5; cprimi < N; test += 2)
-
-	#else
-
-	for (register num_t test = 5; test < N; test += 2)
-
-	#endif
-
+	if ((primes = (prime_t *)malloc(sizeof(prime_t) * primes_to_calc)) == NULL)
 	{
-		rad = sqrtl(test);
-
-		/* Divide per tutti i primi minori della radice quadrata */
-		for (i = 0; primi[i] <= rad; i++)
-			if ((test % primi[i]) == 0)
-				goto nonprimo;
-
-        /* Primo */
-		primi[cprimi++] = test;
-		nonprimo:;
+		perror("malloc()");
+		exit(EXIT_FAILURE);
+	}
+	else
+	{
+		if (primes_to_calc >= 1) primes[primes_counter++] = 2;
+		if (primes_to_calc >= 2) primes[primes_counter++] = 3;
 	}
 
-	#if BENCHMARK
 
-	/* Stampa il tempo impiegato */
-	fine = clock();
-	inf(stderr, "tempo: %f s\n", (double)(fine-inizio)/CLOCKS_PER_SEC);
+	calc_start = clock();
+	for (prime_t test = 5; primes_counter < primes_to_calc; test += 2)
+	{
+		long s;
+		primes_counter_t i;
 
-	#else
+		// Divide per tutti i primi minori della radice quadrata
+		// i parte da 1 perché primes[0] è 2 e nessun numero dispari è divisibile per 2
+		// WARNING sqrtl è un altro collo di bottiglia
+		for (s = sqrtl(test), i = 1; primes[i] <= s; i++)
+			if ((test % primes[i]) == 0)
+				goto not_a_prime;
 
-	/* Stampa i primi trovati */
-	for(i = 0; i < (N-1); i++)
-		/* ATTENZIONE: 3 non è il 2°, ma lo 0° numero primo */
-		/* Non è un bug, basterebbe scrivere i+2 */
-		/* Ma ci vorrebbe più tempo per stampare (?) */
-		printf(CPRIMI_T_FORMAT_STRING " " NUM_T_FORMAT_STRING "\n", i, primi[i]);
+		primes[primes_counter++] = test;
+		not_a_prime:;
+	}
+	calc_end = clock();
 
-	#endif
+
+	for(primes_counter_t i = 0; i < primes_counter; i++)
+		printf(PRIME_T_FORMAT_STRING "\n", primes[i]);
+
+
+	fprintf(stderr, "\nTempo impiegato: %f s\n", (double)(calc_end - calc_start)/CLOCKS_PER_SEC);
+
 
 	return EXIT_SUCCESS;
 }
