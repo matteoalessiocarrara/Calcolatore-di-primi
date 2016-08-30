@@ -8,9 +8,8 @@ implicit none
 
 integer, parameter :: primes_to_calc = 40000
 integer :: primes_counter = 0, i
-! FIXME con integer sqrt() non funziona :(
-real :: test = 5
-real, dimension(primes_to_calc) :: primes
+integer :: test = 5
+integer, dimension(primes_to_calc) :: primes
 
 
 if (primes_to_calc >= 1) then
@@ -26,7 +25,7 @@ endif
 do while(primes_counter < primes_to_calc)
 
 	i = 1
-	do while(primes(i) <= sqrt(test))
+	do while(primes(i) <= sqrt(real(test)))
 		if (mod(test, primes(i)) == 0) then
 			goto 100
 		endif
@@ -40,7 +39,7 @@ enddo
 
 
 do i = 0, primes_to_calc - 1
-	print *, primes(i)
+	print "(1i0)", primes(i) ! TODO Stampare come int
 enddo
 
 
